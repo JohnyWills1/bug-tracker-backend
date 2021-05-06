@@ -1,27 +1,31 @@
 import { Router, Response, Request } from 'express';
+import { IssueService } from '../services/issue.service';
 
-export class PostController {
+export class IssueController {
     public router: Router;
+    private issueService: IssueService;
 
     constructor(){
         this.router = Router();
+        this.issueService = new IssueService();
         this.routes();
     }
 
     public index = async (req: Request, res: Response) => {
-        res.send('Index');
+        const issues = await this.issueService.index();
+        res.send(issues).json();
     }
 
     public create( req: Request, res: Response) {
-        res.send('create');
+        res.send(this.issueService.create());
     }
 
     public update( req: Request, res: Response) {
-        res.send('update');
+        res.send(this.issueService.update());
     }
 
     public delete( req: Request, res: Response) {
-        res.send('delete');
+        res.send(this.issueService.delete());
     }
 
     public routes(){
