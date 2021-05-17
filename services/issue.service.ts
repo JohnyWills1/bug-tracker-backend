@@ -1,4 +1,5 @@
 import { getConnection } from 'typeorm';
+import { IssueEntity } from '../database/entities/IssueEntity';
 import { IssueRepository } from '../repository/issue.repository';
 
 
@@ -14,15 +15,18 @@ export class IssueService {
         return issues;
     }
 
-    public create = () => {
-        return 'Create From Service';
+    public create = async (issue: IssueEntity) => {
+        const newIssue = await this.issueRepository.save(issue);
+        return newIssue;
     }
 
-    public update = () => {
-        return 'Update From Service';
+    public update = async (issue: IssueEntity, id: number) => {
+        const updatedIssue = await this.issueRepository.update(id, issue);
+        return updatedIssue;
     }
 
-    public delete = () => {
-        return 'Delete From Service';
+    public delete = async (id: number) => {
+        const deletedIssue = await this.issueRepository.delete(id);
+        return deletedIssue;
     }
 }

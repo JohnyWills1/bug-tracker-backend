@@ -1,4 +1,5 @@
 import { Router, Response, Request } from 'express';
+import { IssueEntity } from '../database/entities/IssueEntity';
 import { IssueService } from '../services/issue.service';
 
 export class IssueController {
@@ -16,16 +17,23 @@ export class IssueController {
         res.send(issues).json();
     }
 
-    public create( req: Request, res: Response) {
-        res.send(this.issueService.create());
+    public create = async (req: Request, res: Response) => {
+        const issue = req['body'] as IssueEntity;
+        const newIssue = await this.issueService.create(issue);
+
+        res.send(newIssue);
     }
 
     public update( req: Request, res: Response) {
-        res.send(this.issueService.update());
+        const issue = req['body'] as IssueEntity;
+        const id = req['params']['id'];
+
+        res.send(this.issueService.update(issue, Number(id)));
     }
 
     public delete( req: Request, res: Response) {
-        res.send(this.issueService.delete());
+        const id = req['params']['id'];
+        res.send(this.issueService.delete(Number(id)));
     }
 
     public routes(){
