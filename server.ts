@@ -28,7 +28,7 @@ class Server {
 			username: process.env.POSTGRES_USERNAME,
 			password: process.env.POSTGRES_PASSWORD,
 			database: "postgres",
-			entities: ["build/database/entities/**/*.js"],
+			entities: ["./database/entities/*.ts"],
 			synchronize: true,
 		});
 
