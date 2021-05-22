@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import { createConnection } from "typeorm";
 import { IssueController } from "./controller/issue.controller";
+import { ProjectController } from "./controller/project.controller";
 
 require("dotenv").config();
 
 class Server {
 	private issueController!: IssueController;
+	private projectController!: ProjectController;
 	private app: express.Application;
 
 	constructor() {
@@ -33,12 +35,14 @@ class Server {
 		});
 
 		this.issueController = new IssueController();
+		this.projectController = new ProjectController();
 
 		this.app.get("/", (req: Request, res: Response) => {
 			res.send("Hello World");
 		});
 
 		this.app.use(`/api/issues/`, this.issueController.router);
+		this.app.use(`/api/projects/`, this.projectController.router);
 	}
 
 	public start() {
