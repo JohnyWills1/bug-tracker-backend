@@ -14,7 +14,7 @@ export class ProjectEntity {
 	@Column("boolean")
 	starred!: boolean;
 
-	@Column("varchar")
+	@Column("varchar", { array: true })
 	columnOrder!: string[];
 
 	@Column({ type: "timestamp" })

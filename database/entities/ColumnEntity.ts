@@ -8,6 +8,6 @@ export class ColumnEntity {
 	@Column("varchar")
 	title!: string;
 
-	@Column("varchar")
+	@Column("varchar", { array: true })
 	issueIds!: string[];
 }
