@@ -1,42 +1,34 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm';
-import { IssuePriority, IssueType } from '../../constants/issues';
-import { IssueEntity } from './IssueEntity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IssueEntity } from "./IssueEntity";
+import { ColumnEntity } from "./ColumnEntity";
+import { UserEntity } from "./UserEntity";
 
 @Entity()
 export class ProjectEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+	@PrimaryGeneratedColumn("uuid")
+	id!: number;
 
-    @Column('varchar')
-    title!: string;
+	@Column("varchar")
+	title!: string;
 
-    @Column('boolean')
-    starred!: boolean;
+	@Column("boolean")
+	starred!: boolean;
 
-    @Column('varchar')
-    columnOrder!: string[];
+	@Column("varchar")
+	columnOrder!: string[];
 
-    @Column({ type: 'timestamp' })
-    createdAt!: Date;
+	@Column({ type: "timestamp" })
+	createdAt!: Date;
 
-    @Column({ type: 'timestamp' })
-    updatedAt!: Date;
+	@Column({ type: "timestamp" })
+	updatedAt!: Date;
 
-    @OneToMany(
-        () => IssueEntity,
-        issue => issue.project,
-    )
-    issues!: IssueEntity[];
+	@OneToMany(() => IssueEntity, (issue) => issue.project)
+	issues!: IssueEntity[];
 
-    @OneToMany(
-        () => User,
-        user => user.project,
-    )
-    users: User[];
+	@OneToMany(() => UserEntity, (user) => user.project)
+	users!: UserEntity[];
 
-    @OneToMany(
-        () => Column,
-        column => column.id,
-    )
-    columns!: Column[];
+	@OneToMany(() => ColumnEntity, (column) => column.id)
+	columns!: ColumnEntity[];
 }
